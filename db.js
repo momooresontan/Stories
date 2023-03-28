@@ -1,7 +1,10 @@
 const mongoose = require("mongoose");
+const dotenv = require("dotenv");
 
-const DB = process.env.MONGO_URI.replace(
-  "<PASSWORD",
+dotenv.config({ path: "./config.env" });
+
+const DB = process.env.DATABASE.replace(
+  "<PASSWORD>",
   process.env.DATABASE_PASSWORD
 );
 
@@ -10,7 +13,6 @@ const connectDB = async () => {
     const conn = await mongoose.connect(DB, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
-      useFindAndModify: false,
     });
 
     console.log(`MongoDB Connected: ${conn.connection.host}`);
