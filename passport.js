@@ -3,14 +3,16 @@ const mongoose = require('mongoose');
 
 const User = require('./models/userModel');
 
-const passport = (passport) => {
+module.exports = function (passport) {
   passport.use(
     new GoogleStrategy(
       {
         clientID: process.env.GOOGLE_CLIENT_ID,
         clientSecret: process.env.GOOGLE_CLIENT_SECRET,
         callbackURL: '/auth/google/callback',
+        scope: ['profile'],
       },
+
       async (accessToken, refreshToken, profile, done) => {
         const newUser = {
           googleId: profile.id,
@@ -26,7 +28,7 @@ const passport = (passport) => {
           if (user) {
             done(null, user);
           } else {
-            user = await User.create({ newUser });
+            user = await User.create(newUser);
             done(null, user);
           }
         } catch (err) {
@@ -36,13 +38,19 @@ const passport = (passport) => {
     )
   );
 
-  passport.serializeUser((user, done) => {
-    done(null, user.id);
+  passport.serializeUser(function (user, cb) {
+    process.nextTick(function () {
+      return cb(null, {
+        id: user.id,
+        username: user.username,
+        picture: user.picture,
+      });
+    });
   });
 
-  passport.deserializeUser((id, done) => {
-    User.findById(id, (err, user) => done(err, user));
+  passport.deserializeUser(function (user, cb) {
+    process.nextTick(function () {
+      return cb(null, user);
+    });
   });
 };
-
-module.exports = passport;
