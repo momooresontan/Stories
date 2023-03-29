@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 
 const User = require('./models/userModel');
 
-module.exports = function (passport) {
+const passport = function (passport) {
   passport.use(
     new GoogleStrategy(
       {
@@ -54,3 +54,5 @@ module.exports = function (passport) {
     });
   });
 };
+
+module.exports = passport;
