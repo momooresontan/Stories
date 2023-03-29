@@ -7,6 +7,7 @@ const passport = require('passport');
 const session = require('express-session');
 
 const indexRouter = require('./routes/index');
+const authRouter = require('./routes/authRoute');
 
 const connectDB = require('./db');
 
@@ -47,6 +48,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 //Routes
 app.use('/', indexRouter);
+app.use('/auth', authRouter);
 
 const PORT = process.env.PORT || 3000;
 
