@@ -1,10 +1,12 @@
 const path = require('path');
 const express = require('express');
+const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const morgan = require('morgan');
 const exphbs = require('express-handlebars');
 const passport = require('passport');
 const session = require('express-session');
+const mongoStore = require('connect-mongo');
 
 const indexRouter = require('./routes/index');
 const authRouter = require('./routes/authRoute');
@@ -36,6 +38,7 @@ app.use(
     secret: 'keyboard cat',
     resave: false,
     saveUninitialized: false,
+    store: mongoStore.create({ mongoUrl: process.env.MONGO_URL }),
   })
 );
 
