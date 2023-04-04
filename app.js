@@ -10,6 +10,7 @@ const mongoStore = require('connect-mongo');
 
 const indexRouter = require('./routes/index');
 const authRouter = require('./routes/authRoute');
+const storiesRouter = require('./routes/storiesRoute');
 
 const connectDB = require('./db');
 
@@ -52,6 +53,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 //Routes
 app.use('/', indexRouter);
 app.use('/auth', authRouter);
+app.use('/stories', storiesRouter);
 
 const PORT = process.env.PORT || 3000;
 
