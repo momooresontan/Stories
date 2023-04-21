@@ -31,27 +31,9 @@ exports.editIcon = (storyUser, loggedUser, storyId, floating = true) => {
   }
 };
 
-exports.select = function (selected, options) {
+exports.select = function (value, options) {
   return options
     .fn(this)
-    .replace(new RegExp(' value="' + selected + '"'), '$& selected="selected"')
-    .replace(
-      new RegExp('>' + selected + '</option>'),
-      ' selected="selected"$&'
-    );
-  //return selected == option ? 'selected="selected"' : '';
-  // return options
-  //   .fn(this)
-  //   .replace(new RegExp(' value="' + selected + '"'), '$& selected="selected"')
-  //   .replace(
-  //     new RegExp('>' + selected + '</option>'),
-  //     ' selected="selected"$&'
-  //   );
-  // return options
-  //   .fn(this)
-  //   .replace(new RegExp(' value="' + selected + '"'), '$& selected="selected"')
-  //   .replace(
-  //     new RegExp('>' + selected + '</option>'),
-  //     ' selected="selected"$&'
-  //   );
+    .replace(new RegExp(' value="' + value + '"'), '$& selected="selected"')
+    .replace(new RegExp('>' + value + '</option>'), ' selected="selected"$&');
 };
